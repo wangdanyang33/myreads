@@ -13,15 +13,15 @@ class BooksApp extends React.Component {
 
   componentDidMount() {
     BooksAPI.getAll().then((result) => {
-      this.setState({books: result});
+      this.setState({ books: result });
     })
   }
-  
+
   handleBookMove = (book, e) => {
     let found = false
     const destinationShelf = e.target.value;
     const currentBooks = [...this.state.books];
-    for (let i = 0; i < currentBooks.length; i ++) {
+    for (let i = 0; i < currentBooks.length; i++) {
       if (currentBooks[i].id === book.id) {
         currentBooks[i].shelf = destinationShelf
         found = true
@@ -38,19 +38,19 @@ class BooksApp extends React.Component {
         }
       })
     }
-    this.setState({books: currentBooks})
+    this.setState({ books: currentBooks })
   }
 
   render() {
     return (
       <div className="app">
         <Route exact path='/' render={() => (
-          <BookShelf handleBookMove={this.handleBookMove} 
-                    books={this.state.books} />
+          <BookShelf handleBookMove={this.handleBookMove}
+            books={this.state.books} />
         )} />
 
         <Route path='/add' render={() => (
-          <SearchPage handleBookMove={this.handleBookMove} />
+          <SearchPage existingBooks={this.state.books} handleBookMove={this.handleBookMove} />
         )} />
       </div>
     )
